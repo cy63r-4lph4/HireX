@@ -12,7 +12,7 @@ contract ENSManager is Initializable, OwnableUpgradeable {
 
     event SubnameRegistered(address indexed user, string subname);
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
+    /// @custom:oz-upgrades-unsafe-allow 
     constructor() {
         _disableInitializers();
     }

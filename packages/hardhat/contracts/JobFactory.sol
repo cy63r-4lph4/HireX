@@ -1,0 +1,136 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+interface IProfile {
+    function getProfile(
+        address _user
+    )
+        external
+        view
+        returns (
+            address user,
+            string memory ensName,
+            string memory metadataURI,
+            bool exists,
+            bool hasEFP,
+            uint256 reputation
+        );
+}
+
+contract JobFactory is Initializable, OwnableUpgradeable {
+    enum JobStatus {
+        Open,
+        Assigned,
+        Completed,
+        Cancelled
+    }
+
+    struct Job {
+        uint256 id;
+        address client;
+        address worker;
+        string title;
+        string descriptionURI;
+        uint256 budget;
+        uint256 deadline;
+        JobStatus status;
+    }
+
+    IERC20 public coreToken;
+    IProfile public profileContract;
+
+    uint256 public jobCount;
+    mapping(uint256 => Job) public jobs;
+
+    event JobCreated(uint256 indexed jobId, address indexed client, uint256 budget);
+    event JobAssigned(uint256 indexed jobId, address indexed worker);
+    event JobCompleted(uint256 indexed jobId, address indexed worker);
+    event JobCancelled(uint256 indexed jobId);
+
+    function initialize(address _coreToken, address _profileContract) public initializer {
+        __Ownable_init(msg.sender);
+
+        coreToken = IERC20(_coreToken);
+        profileContract = IProfile(_profileContract);
+    }
+
+    /// @notice Client posts a job with budget locked in escrow
+    function createJob(
+        string calldata title,
+        string calldata descriptionURI,
+        uint256 budget,
+        uint256 deadline
+    ) external {
+        require(budget > 0, "Invalid budget");
+        require(deadline > block.timestamp, "Deadline must be future");
+
+        // transfer budget to contract
+        require(coreToken.transferFrom(msg.sender, address(this), budget), "Funding failed");
+
+        jobCount++;
+        jobs[jobCount] = Job({
+            id: jobCount,
+            client: msg.sender,
+            worker: address(0),
+            title: title,
+            descriptionURI: descriptionURI,
+            budget: budget,
+            deadline: deadline,
+            status: JobStatus.Open
+        });
+
+        emit JobCreated(jobCount, msg.sender, budget);
+    }
+
+    /// @notice Worker accepts job
+    function acceptJob(uint256 jobId) external {
+        Job storage job = jobs[jobId];
+        require(job.status == JobStatus.Open, "Job not open");
+        require(job.client != msg.sender, "Client cannot take own job");
+
+        // check profile exists
+        (, , , bool exists, , ) = profileContract.getProfile(msg.sender);
+        require(exists, "Worker must have profile");
+
+        job.worker = msg.sender;
+        job.status = JobStatus.Assigned;
+
+        emit JobAssigned(jobId, msg.sender);
+    }
+
+    /// @notice Client marks job as completed → releases payment
+    function completeJob(uint256 jobId) external {
+        Job storage job = jobs[jobId];
+        require(job.status == JobStatus.Assigned, "Not assigned");
+        require(job.client == msg.sender, "Only client can complete");
+
+        // ✅ update state first
+        job.status = JobStatus.Completed;
+        address worker = job.worker;
+        uint256 amount = job.budget;
+
+        // then external call
+        require(coreToken.transfer(worker, amount), "Payment failed");
+
+        emit JobCompleted(jobId, worker);
+    }
+
+    /// @notice Client cancels before worker accepts
+    function cancelJob(uint256 jobId) external {
+        Job storage job = jobs[jobId];
+        require(job.status == JobStatus.Open, "Job not open");
+        require(job.client == msg.sender, "Only client can cancel");
+
+        job.status = JobStatus.Cancelled;
+        uint256 refund = job.budget;
+        address client = job.client;
+
+        require(coreToken.transfer(client, refund), "Refund failed");
+
+        emit JobCancelled(jobId);
+    }
+}
