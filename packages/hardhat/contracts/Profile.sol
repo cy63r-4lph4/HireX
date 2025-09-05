@@ -1,22 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 interface IENSManager {
     function registerSubname(address _user, string calldata preferredName) external returns (string memory);
 }
 
-contract Profile is Initializable, OwnableUpgradeable {
+contract Profile is Ownable {
     struct UserProfile {
         address user;
         string ensName;
         string metadataURI;
         bool exists;
         bool hasEFP;
-        string credentialHash; 
+        string credentialHash;
         uint256 reputation;
     }
 
@@ -31,8 +30,7 @@ contract Profile is Initializable, OwnableUpgradeable {
     event ReputationUpdated(address indexed user, uint256 newScore);
     event MetadataUpdated(address indexed user, string newURI);
 
-    function initialize(address _coreToken, address _ensManager, uint256 _faucetAmount) public initializer {
-        __Ownable_init(msg.sender); // OZ v5 requires owner param
+    constructor(address _coreToken, address _ensManager, uint256 _faucetAmount) Ownable(msg.sender) {
         coreToken = IERC20(_coreToken);
         ensManager = IENSManager(_ensManager);
         faucetAmount = _faucetAmount;
@@ -89,4 +87,3 @@ contract Profile is Initializable, OwnableUpgradeable {
         return _profileIds;
     }
 }
-

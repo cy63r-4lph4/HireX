@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 interface IProfile {
     function getProfile(
@@ -21,7 +20,7 @@ interface IProfile {
         );
 }
 
-contract JobFactory is Initializable, OwnableUpgradeable {
+contract JobFactory is Ownable {
     enum JobStatus {
         Open,
         Assigned,
@@ -51,9 +50,7 @@ contract JobFactory is Initializable, OwnableUpgradeable {
     event JobCompleted(uint256 indexed jobId, address indexed worker);
     event JobCancelled(uint256 indexed jobId);
 
-    function initialize(address _coreToken, address _profileContract) public initializer {
-        __Ownable_init(msg.sender);
-
+    constructor(address _coreToken, address _profileContract) Ownable(msg.sender) {
         coreToken = IERC20(_coreToken);
         profileContract = IProfile(_profileContract);
     }
@@ -132,5 +129,38 @@ contract JobFactory is Initializable, OwnableUpgradeable {
         require(coreToken.transfer(client, refund), "Refund failed");
 
         emit JobCancelled(jobId);
+    }
+
+    function getJob(uint256 jobId) external view returns (Job memory) {
+        require(jobId > 0 && jobId <= jobCount, "Invalid jobId");
+        return jobs[jobId];
+    }
+
+    function getAllJobs() external view returns (Job[] memory) {
+        Job[] memory all = new Job[](jobCount);
+        for (uint256 i = 1; i <= jobCount; i++) {
+            all[i - 1] = jobs[i];
+        }
+        return all;
+    }
+
+    function getOpenJobs() external view returns (Job[] memory) {
+        // count first
+        uint256 count = 0;
+        for (uint256 i = 1; i <= jobCount; i++) {
+            if (jobs[i].status == JobStatus.Open) {
+                count++;
+            }
+        }
+        // fill array
+        Job[] memory openJobs = new Job[](count);
+        uint256 index = 0;
+        for (uint256 i = 1; i <= jobCount; i++) {
+            if (jobs[i].status == JobStatus.Open) {
+                openJobs[index] = jobs[i];
+                index++;
+            }
+        }
+        return openJobs;
     }
 }

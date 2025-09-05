@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ENSManager is Initializable, OwnableUpgradeable {
+contract ENSManager is Ownable {
     string public baseDomain;
 
     mapping(string => address) public subnameOwners;
@@ -12,13 +11,7 @@ contract ENSManager is Initializable, OwnableUpgradeable {
 
     event SubnameRegistered(address indexed user, string subname);
 
-    /// @custom:oz-upgrades-unsafe-allow 
-    constructor() {
-        _disableInitializers();
-    }
-
-    function initialize(string memory _baseDomain) public initializer {
-        __Ownable_init(msg.sender);
+    constructor(string memory _baseDomain) Ownable(msg.sender) {
         baseDomain = _baseDomain;
     }
 

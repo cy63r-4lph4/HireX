@@ -59,6 +59,8 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.4.0",
-    "@openzeppelin/contracts-upgradeable": "latest"
+    "@openzeppelin/contracts-upgradeable": "latest",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.542.0"
   }
 }

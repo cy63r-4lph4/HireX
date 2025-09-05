@@ -3,7 +3,6 @@
 // @refresh reset
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
-import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { RevealBurnerPKModal } from "./RevealBurnerPKModal";
 import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -44,11 +43,15 @@ export const RainbowKitCustomConnectButton = () => {
 
               return (
                 <>
-                  <div className="flex flex-col items-center mr-1">
+                  {" "}
+                  <div className="flex items-center ">
+                    <div className=" sm:flex items-center  px-3 py-1.5 text-xs rounded-lg  hover:bg-white/10">
+                      <span className="text-xs font-bold" style={{ color: networkColor }}>
+                        {chain.name}
+                      </span>
+                    </div>
+
                     <Balance address={account.address as Address} className="min-h-0 h-auto" />
-                    <span className="text-xs" style={{ color: networkColor }}>
-                      {chain.name}
-                    </span>
                   </div>
                   <AddressInfoDropdown
                     address={account.address as Address}
@@ -56,7 +59,6 @@ export const RainbowKitCustomConnectButton = () => {
                     ensAvatar={account.ensAvatar}
                     blockExplorerAddressLink={blockExplorerAddressLink}
                   />
-                  <AddressQRCodeModal address={account.address as Address} modalId="qrcode-modal" />
                   <RevealBurnerPKModal />
                 </>
               );

@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract JobEscrow is Initializable {
+contract JobEscrow {
     enum JobStatus {
         Created,
         Funded,
@@ -35,7 +34,7 @@ contract JobEscrow is Initializable {
         _;
     }
 
-    function initialize(address _hirer, address _worker, uint256 _amount, address _coreToken) external initializer {
+    constructor(address _hirer, address _worker, uint256 _amount, address _coreToken) {
         hirer = _hirer;
         worker = _worker;
         amount = _amount;
