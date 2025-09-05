@@ -1,64 +1,62 @@
-import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { DeployFunction } from "hardhat-deploy/types";
-import { Contract } from "ethers";
+// import { HardhatRuntimeEnvironment } from "hardhat/types";
+// import { DeployFunction } from "hardhat-deploy/types";
+// import namehash from "eth-ens-namehash";
 
-const deployHireX: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployer } = await hre.getNamedAccounts();
-  const { log } = hre.deployments;
-  const { ethers } = hre;
+// const deployHireX: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+//   const { deployer } = await hre.getNamedAccounts();
+//   const { deploy, log } = hre.deployments;
+//   const { ethers } = hre;
 
-  log("🚀 Deploying HireX contracts...");
+//   log("🚀 Deploying HireX contracts...");
 
-  // 1️⃣ Deploy Alph4Core token
-  // const tokenDeployment = await deploy("Alph4Core", {
-  //   from: deployer,
-  //   args: [100_000_000], // cap
-  //   log: true,
-  //   autoMine: true,
-  // });
+//   // 1️⃣ Deploy Alph4Core token
+//   const tokenDeployment = await deploy("Alph4Core", {
+//     from: deployer,
+//     args: [100_000_000], // cap
+//     log: true,
+//     autoMine: true,
+//   });
+//   log(`✅ Alph4Core deployed at: ${tokenDeployment.address}`);
 
-  const token = await ethers.getContract<Contract>("Alph4Core", deployer);
-  log("✅ Alph4Core deployed at:", token.target);
+//   // 2️⃣ Deploy ENSManager
+//   const parentDomain = "hirex.eth";
+//   const parentNode = namehash.hash(parentDomain);
+//   const nameWrapperAddress = "0xd42Cb8E3C9F2B842123F56428D37aA7943d39956"; // update with correct NameWrapper
+//   const baseDomain = parentDomain;
 
-  // 2️⃣ Deploy ENSManager (non-upgradeable)
-  // const ensDeployment = await deploy("ENSManager", {
-  //   from: deployer,
-  //   args: ["local"], // baseDomain
-  //   log: true,
-  //   autoMine: true,
-  // });
+//   const ensDeployment = await deploy("ENSManager", {
+//     from: deployer,
+//     args: [nameWrapperAddress, parentNode, baseDomain],
+//     log: true,
+//     autoMine: true,
+//   });
+//   log(`✅ ENSManager deployed at: ${ensDeployment.address}`);
 
-  const ensManager = await ethers.getContract<Contract>("ENSManager", deployer);
-  log("✅ ENSManager deployed at:", ensManager.target);
+//   // 3️⃣ Deploy Profile
+//   const faucetAmount = ethers.parseUnits("1000", 18);
 
-  // 3️⃣ Deploy Profile (non-upgradeable)
-  // const profileDeployment = await deploy("Profile", {
-  //   from: deployer,
-  //   args: [
-  //     token.target,
-  //     ensManager.target,
-  //     ethers.parseUnits("1000", 18), // faucetAmount
-  //   ],
-  //   log: true,
-  //   autoMine: true,
-  // });
+//   const profileDeployment = await deploy("Profile", {
+//     from: deployer,
+//     args: [
+//       tokenDeployment.address,
+//       ensDeployment.address,
+//       faucetAmount,
+//     ],
+//     log: true,
+//     autoMine: true,
+//   });
+//   log(`✅ Profile deployed at: ${profileDeployment.address}`);
 
-  const profile = await ethers.getContract<Contract>("Profile", deployer);
-  log("✅ Profile deployed at:", profile.target);
+//   // 4️⃣ Deploy JobFactory
+//   const jobFactoryDeployment = await deploy("JobFactory", {
+//     from: deployer,
+//     args: [tokenDeployment.address, profileDeployment.address],
+//     log: true,
+//     autoMine: true,
+//   });
+//   log(`✅ JobFactory deployed at: ${jobFactoryDeployment.address}`);
 
-  // 4️⃣ Deploy JobFactory (non-upgradeable)
-  // const jobFactoryDeployment = await deploy("JobFactory", {
-  //   from: deployer,
-  //   args: [token.target, profile.target],
-  //   log: true,
-  //   autoMine: true,
-  // });
+// };
 
-  const jobFactory = await ethers.getContract<Contract>("JobFactory", deployer);
-  log("✅ JobFactory deployed at:", jobFactory.target);
-
-  // 5️⃣ Deploy JobEscrow (non-upgradeable)
-};
-
-deployHireX.tags = ["HireX"];
-export default deployHireX;
+// deployHireX.tags = ["HireX"];
+// export default deployHireX;

@@ -33,7 +33,7 @@ contract JobFactory is Ownable {
         address client;
         address worker;
         string title;
-        string descriptionURI;
+        string metadataURI;
         uint256 budget;
         uint256 deadline;
         JobStatus status;
@@ -56,12 +56,7 @@ contract JobFactory is Ownable {
     }
 
     /// @notice Client posts a job with budget locked in escrow
-    function createJob(
-        string calldata title,
-        string calldata descriptionURI,
-        uint256 budget,
-        uint256 deadline
-    ) external {
+    function createJob(string calldata title, string calldata metadataURI, uint256 budget, uint256 deadline) external {
         require(budget > 0, "Invalid budget");
         require(deadline > block.timestamp, "Deadline must be future");
 
@@ -74,7 +69,7 @@ contract JobFactory is Ownable {
             client: msg.sender,
             worker: address(0),
             title: title,
-            descriptionURI: descriptionURI,
+            metadataURI: metadataURI,
             budget: budget,
             deadline: deadline,
             status: JobStatus.Open
