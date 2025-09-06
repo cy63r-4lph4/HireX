@@ -4,12 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Plus, Search } from "lucide-react";
 import type { NextPage } from "next";
-// import { useAccount } from "wagmi";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Button } from "~~/components/ui/button";
 import { Card, CardContent } from "~~/components/ui/card";
 import { InfiniteScroller } from "~~/components/ui/infinite-scroller";
-import { SERVICES } from "~~/constants";
+import { FEATURES, SERVICES } from "~~/constants";
 
 const Home: NextPage = () => {
   // const { address: connectedAddress } = useAccount();
@@ -110,30 +108,100 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col md:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
+        <section className="py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-orbitron font-bold gradient-text mb-4">Platform Features</h2>
+              <p className="text-gray-300 text-lg">Experience the future of task management with Web3 technology</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {FEATURES.map((feature, index) => (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="group"
+                >
+                  <Card className="glass-effect border-white/20 hover:border-blue-500/50 transition-all duration-300 h-full">
+                    <CardContent className="p-6">
+                      <div className="w-12 h-12 mb-4 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center group-hover:pulse-glow transition-all duration-300">
+                        <feature.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-300">{feature.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
             </div>
           </div>
-        </div>
+        </section>
+        <section className="py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="glass-effect rounded-2xl p-8 md:p-12 text-center neon-border"
+            >
+              <h2 className="text-3xl md:text-4xl font-orbitron font-bold gradient-text mb-4">Ready to Get Started?</h2>
+              <p className="text-gray-300 text-lg mb-8">
+                Join thousands of users already using <span className="core-token">CØRE</span> tokens for seamless task
+                management and payments.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/find-tasks">
+                  <Button className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 crypto-glow text-lg px-8 py-3">
+                    Start Finding Tasks
+                  </Button>
+                </Link>
+
+                <Link href="/post-task">
+                  <Button
+                    variant="outline"
+                    className="w-full sm:w-auto neon-border text-lg px-8 py-3 bg-transparent hover:bg-white/10"
+                  >
+                    Post Your First Task
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="py-16 px-4 sm:px-6 lg:px-8 border-t border-white/10">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {[
+                { number: "10K+", label: "Active Users" },
+                { number: "25K+", label: "Tasks Completed" },
+                { number: "500K+", label: "CØRE Tokens Earned" },
+                { number: "99.9%", label: "Success Rate" },
+              ].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <div className="text-3xl md:text-4xl font-orbitron font-bold gradient-text mb-2">{stat.number}</div>
+                  <div className="text-gray-300">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );
