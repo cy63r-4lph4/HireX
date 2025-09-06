@@ -4,10 +4,9 @@ import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Car, ChefHat, Clock, Lightbulb, MapPin, Paintbrush, Scissors, Search, Star, Wrench } from "lucide-react";
-import { Badge } from "~~/components/ui/badge";
+import { Car, ChefHat, Lightbulb, Paintbrush, Scissors, Search, Wrench } from "lucide-react";
+import { TaskCard } from "~~/components/TaskCard";
 import { Button } from "~~/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "~~/components/ui/card";
 import { Input } from "~~/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~~/components/ui/select";
 import { useFetchTasks } from "~~/hooks/useFetchTask";
@@ -192,94 +191,13 @@ export default function FindTasksPage() {
                     const CategoryIcon = getCategoryIcon(task.category);
 
                     return (
-                      <motion.div
+                      <TaskCard
                         key={task.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        whileHover={{ y: -5 }}
-                      >
-                        <Card className="glass-effect border-white/20 hover:border-blue-500/50 transition-all duration-300 h-full">
-                          <CardHeader>
-                            <div className="flex items-start justify-between">
-                              <div className="flex items-center space-x-3">
-                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                                  <CategoryIcon className="w-5 h-5 text-white" />
-                                </div>
-                                <div>
-                                  <CardTitle className="text-white text-lg">{task.title}</CardTitle>
-                                  <p className="text-gray-400 text-sm">
-                                    by {task.postedBy} • {task.postedTime}
-                                  </p>
-                                </div>
-                              </div>
-                              <Badge className={`${getUrgencyColor(task.urgency)} border`}>{task.urgency}</Badge>
-                            </div>
-                          </CardHeader>
-
-                          <CardContent className="space-y-4">
-                            <p className="text-gray-300">{task.description}</p>
-
-                            <div className="flex flex-wrap gap-2">
-                              {task.skills.map(skill => (
-                                <Badge key={skill} variant="outline" className="text-blue-400 border-blue-500/30">
-                                  {skill}
-                                </Badge>
-                              ))}
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4 text-sm">
-                              <div className="flex items-center space-x-2 text-gray-300">
-                                <MapPin className="w-4 h-4 text-blue-400" />
-                                <span>{task.location}</span>
-                              </div>
-                              <div className="flex items-center space-x-2 text-gray-300">
-                                <Clock className="w-4 h-4 text-green-400" />
-                                <span>{task.timeEstimate}</span>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                              <div className="flex items-center space-x-4">
-                                <div className="flex items-center space-x-1">
-                                  <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                  <span className="text-white font-semibold">{task.rating}</span>
-                                  <span className="text-gray-400">({task.reviews})</span>
-                                </div>
-                                <Badge className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-400 border-yellow-500/30">
-                                  {task.budget} <span className="core-token ml-1">CØRE</span>
-                                </Badge>
-                              </div>
-
-                              <Button
-                                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                                onClick={() => router.push(`/task/${task.id}`)}
-                              >
-                                View Details
-                              </Button>
-                            </div>
-
-                            <div className="flex items-center justify-between text-sm text-gray-400">
-                              <span>Service: {task.serviceType === "on-site" ? "On-site visit" : "Workshop"}</span>
-                              {task.status && (
-                                <Badge
-                                  className={`text-xs ${
-                                    task.status === "assigned"
-                                      ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
-                                      : task.status === "completed"
-                                        ? "bg-green-500/20 text-green-400 border-green-500/30"
-                                        : task.status === "cancelled"
-                                          ? "bg-red-500/20 text-red-400 border-red-500/30"
-                                          : "bg-blue-500/20 text-blue-400 border-blue-500/30"
-                                  } border`}
-                                >
-                                  {task.status}
-                                </Badge>
-                              )}
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </motion.div>
+                        task={task}
+                        index={index}
+                        getUrgencyColor={getUrgencyColor}
+                        CategoryIcon={CategoryIcon}
+                      />
                     );
                   })}
                 </div>
