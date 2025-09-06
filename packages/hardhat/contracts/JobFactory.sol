@@ -68,7 +68,6 @@ contract JobFactory is Ownable {
         require(budget > 0, "Invalid budget");
         require(deadline > block.timestamp, "Deadline must be future");
 
-        // pull tokens from hirer's wallet (not relayer)
         require(coreToken.transferFrom(hirer, address(this), budget), "Funding failed");
 
         jobCount++;
@@ -92,7 +91,6 @@ contract JobFactory is Ownable {
         require(job.status == JobStatus.Open, "Job not open");
         require(job.client != msg.sender, "Client cannot take own job");
 
-        // check profile exists
         (, , , bool exists, , ) = profileContract.getProfile(msg.sender);
         require(exists, "Worker must have profile");
 
@@ -108,12 +106,10 @@ contract JobFactory is Ownable {
         require(job.status == JobStatus.Assigned, "Not assigned");
         require(job.client == msg.sender, "Only client can complete");
 
-        // ✅ update state first
         job.status = JobStatus.Completed;
         address worker = job.worker;
         uint256 amount = job.budget;
 
-        // then external call
         require(coreToken.transfer(worker, amount), "Payment failed");
 
         emit JobCompleted(jobId, worker);

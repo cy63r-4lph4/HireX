@@ -29,13 +29,13 @@ export const Header = () => {
   const workerNavItems = [
     { path: "/", icon: HomeIcon, label: "Home" },
     { path: "/tasks", icon: MagnifyingGlassIcon, label: "Find Tasks" },
-    // { path: "/post-task", icon: PlusCircleIcon, label: "Post Task" },
+    { path: "/post-task", icon: PlusCircleIcon, label: "Post Task" },
   ];
 
   const clientNavItems = [
     { path: "/", icon: HomeIcon, label: "Home" },
     { path: "/workers", icon: UsersIcon, label: "Find Workers" },
-    { path: "/post", icon: PlusCircleIcon, label: "Post Job" },
+    { path: "/post-task", icon: PlusCircleIcon, label: "Post Task" },
   ];
 
   const navItems = userRole === "worker" ? workerNavItems : clientNavItems;

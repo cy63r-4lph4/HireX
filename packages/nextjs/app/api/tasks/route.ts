@@ -60,7 +60,6 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: `Missing field: ${key}` }, { status: 400 });
       }
     }
-    console.log("[3] Validation passed");
 
     if (!Array.isArray(body.skills)) {
       return NextResponse.json({ error: "skills must be an array of strings" }, { status: 400 });
@@ -107,7 +106,6 @@ export async function POST(req: Request) {
     if (!jobFactoryInfo) {
       return NextResponse.json({ error: "JobFactory contract not found for current chain" }, { status: 500 });
     }
-    console.log("[8] Loaded JobFactory:", jobFactoryInfo.address);
 
     const contract = new ethers.Contract(jobFactoryInfo.address, jobFactoryInfo.abi, wallet);
 
@@ -206,6 +204,7 @@ export async function GET() {
     // === Transform & filter
     const parsedJobs: TaskPosting[] = jobs.map((job: any) => {
       const metadata = readMetadataByCid(job.metadataURI) || {};
+
       return {
         id: Number(job.id),
         title: metadata.title || job.title || "Untitled",
@@ -213,7 +212,7 @@ export async function GET() {
         category: metadata.category || "general",
         location: metadata.location || "unknown",
         coordinates: metadata.coordinates,
-        budget: Number(job.budget),
+        budget: Number(job.budget) / 1e18,
         timeEstimate: metadata.timeEstimate || "N/A",
         urgency: metadata.urgency || "medium",
         serviceType: metadata.serviceType || "on-site",
