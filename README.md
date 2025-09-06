@@ -1,80 +1,93 @@
-# 🏗 Scaffold-ETH 2
+# HireX 🛠️
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+HireX is a decentralized hiring platform where **skills speak louder than papers**.  
+It allows individuals and communities to build **on-chain reputations**, manage jobs through smart contracts, and get paid transparently.
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+🚀 Frontend Deployment: [hire-x-nextjs.vercel.app](https://hire-x-nextjs.vercel.app/)
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+---
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+## 📜 Smart Contracts
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+HireX is powered by five core contracts, each handling a different part of the system:
 
-## Requirements
+### 1. **Token.sol**
 
-Before you begin, you need to install the following tools:
+- The native token of the HireX ecosystem (Alph4 Core).
+- Used for payments, job escrow, and incentives.
+- Can be integrated across other dApps in the 4lph4 verse.
 
-- [Node (>= v20.18.3)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+**Deployed Address:**  
+`0xb5d8887AB09AdB5983AACEed4e1AbB9267407823`
 
-## Quickstart
+---
 
-To get started with Scaffold-ETH 2, follow the steps below:
+### 2. **Profile.sol**
 
-1. Install dependencies if it was skipped in CLI:
+- Manages user profiles on-chain.
+- Stores verifiable identity, work history, and endorsements.
+- Acts as the backbone for **reputation scoring**.
 
-```
-cd my-dapp-example
-yarn install
-```
+**Deployed Address:**  
+`0x565A99925AEd5b53F363EBB5BfE268bBD8d414fe`
 
-2. Run a local network in the first terminal:
+---
 
-```
-yarn chain
-```
+### 3. **ENSManager.sol**
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/hardhat/hardhat.config.ts`.
+- Handles ENS-style name registrations for HireX.
+- Allows users to claim human-readable names linked to their HireX profiles.
+- Future support for **cross-L2 ENS integration**.
 
-3. On a second terminal, deploy the test contract:
+**Deployed Address:**  
+`0x7a58069532202c1bB06CD61A36b470AC89E90fF9`
 
-```
-yarn deploy
-```
+---
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+### 4. **JobFactory.sol**
 
-4. On a third terminal, start your NextJS app:
+- The main contract to **create and manage job postings**.
+- Employers can spin up jobs that workers apply to.
+- Links each job to its dedicated escrow contract.
 
-```
-yarn start
-```
+**Deployed Address:**  
+`0x36d760E4B1AE55eF86Fd5EB928Fc2DC3C10d8D7a`
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+---
 
-Run smart contract test with `yarn hardhat:test`
+### 5. **JobEscrow.sol**
 
-- Edit your smart contracts in `packages/hardhat/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
+- Every task is deployed as its own contract.
+- Ensures **secure payments** between hirers and workers.
+- Funds are locked until the work is completed and verified.
+- Reduces fraud and guarantees fair compensation.
 
+---
 
-## Documentation
+## 🌐 Frontend
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+The frontend is built with **Next.js** and deployed on **Vercel**.
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+👉 [hire-x-nextjs.vercel.app](https://hire-x-nextjs.vercel.app/)
 
-## Contributing to Scaffold-ETH 2
+---
 
-We welcome contributions to Scaffold-ETH 2!
+## 🔮 Roadmap
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+- [ ] Launch MVP with core contracts on testnet.
+- [ ] Expand to blue-collar and community-driven hiring.
+- [ ] Add premium features (boosted profiles, analytics).
+- [ ] Integrate decentralized identity (DID) fully.
+- [ ] Mainnet deployment + scaling.
+
+---
+
+## 🤝 Contributing
+
+PRs are welcome! If you’d like to contribute, fork the repo and submit a pull request.
+
+---
+
+## 📄 License
+
+MIT License.

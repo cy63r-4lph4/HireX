@@ -29,7 +29,7 @@ export const Header = () => {
   const workerNavItems = [
     { path: "/", icon: HomeIcon, label: "Home" },
     { path: "/tasks", icon: MagnifyingGlassIcon, label: "Find Tasks" },
-    { path: "/post-task", icon: PlusCircleIcon, label: "Post Task" },
+    // { path: "/post-task", icon: PlusCircleIcon, label: "Post Task" },
   ];
 
   const clientNavItems = [
