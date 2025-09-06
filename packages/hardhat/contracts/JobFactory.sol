@@ -56,17 +56,25 @@ contract JobFactory is Ownable {
     }
 
     /// @notice Client posts a job with budget locked in escrow
-    function createJob(string calldata title, string calldata metadataURI, uint256 budget, uint256 deadline) external {
+    /// @param hirer the real client funding the job
+    function createJob(
+        address hirer,
+        string calldata title,
+        string calldata metadataURI,
+        uint256 budget,
+        uint256 deadline
+    ) external {
+        require(hirer != address(0), "Invalid hirer");
         require(budget > 0, "Invalid budget");
         require(deadline > block.timestamp, "Deadline must be future");
 
-        // transfer budget to contract
-        require(coreToken.transferFrom(msg.sender, address(this), budget), "Funding failed");
+        // pull tokens from hirer's wallet (not relayer)
+        require(coreToken.transferFrom(hirer, address(this), budget), "Funding failed");
 
         jobCount++;
         jobs[jobCount] = Job({
             id: jobCount,
-            client: msg.sender,
+            client: hirer,
             worker: address(0),
             title: title,
             metadataURI: metadataURI,
@@ -75,7 +83,7 @@ contract JobFactory is Ownable {
             status: JobStatus.Open
         });
 
-        emit JobCreated(jobCount, msg.sender, budget);
+        emit JobCreated(jobCount, hirer, budget);
     }
 
     /// @notice Worker accepts job

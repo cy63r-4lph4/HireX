@@ -1,0 +1,19 @@
+{
+  "title": "fix kitchen outlet",
+  "description": "i need a plumber",
+  "category": "plumber",
+  "location": "legon",
+  "budgetTokens": 120,
+  "timeEstimate": "3-4 hours",
+  "urgency": "medium",
+  "serviceType": "on-site",
+  "skills": [
+    "plumbing"
+  ],
+  "coordinates": {
+    "lat": "5.5545",
+    "lng": "-0.1902"
+  },
+  "hirer": null,
+  "createdAt": 1757132364406
+}

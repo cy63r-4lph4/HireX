@@ -2,8 +2,9 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract JobEscrow {
+contract JobEscrow is ReentrancyGuard {
     enum JobStatus {
         Created,
         Funded,
@@ -35,6 +36,10 @@ contract JobEscrow {
     }
 
     constructor(address _hirer, address _worker, uint256 _amount, address _coreToken) {
+        require(_hirer != address(0), "Invalid hirer");
+        require(_worker != address(0), "Invalid worker");
+        require(_amount > 0, "Invalid amount");
+
         hirer = _hirer;
         worker = _worker;
         amount = _amount;
@@ -44,7 +49,7 @@ contract JobEscrow {
         emit JobInitialized(_hirer, _worker, _amount);
     }
 
-    function fundJob() external onlyHirer {
+    function fundJob() external onlyHirer nonReentrant {
         require(status == JobStatus.Created, "Job not in created state");
         require(coreToken.transferFrom(hirer, address(this), amount), "Funding failed");
 
@@ -58,7 +63,7 @@ contract JobEscrow {
         emit JobCompleted(worker);
     }
 
-    function releasePayment() external onlyHirer {
+    function releasePayment() external onlyHirer nonReentrant {
         require(status == JobStatus.Completed, "Job not completed");
         status = JobStatus.Released;
 
@@ -66,13 +71,17 @@ contract JobEscrow {
         emit PaymentReleased(worker, amount);
     }
 
-    function cancelJob() external onlyHirer {
+    function cancelJob() external onlyHirer nonReentrant {
         require(status == JobStatus.Funded || status == JobStatus.Created, "Job not cancellable");
 
+        JobStatus prev = status;
         status = JobStatus.Cancelled;
-        if (status == JobStatus.Funded) {
+
+        if (prev == JobStatus.Funded) {
             require(coreToken.transfer(hirer, amount), "Refund failed");
+            emit JobCancelled(hirer, amount);
+        } else {
+            emit JobCancelled(hirer, 0);
         }
-        emit JobCancelled(hirer, amount);
     }
 }

@@ -54,3 +54,29 @@ export const FEATURES = [
     description: "AI-powered matching system for quick task completion",
   },
 ];
+
+export const CATEGORIES = [
+  { value: "electrician", label: "Electrician", icon: Wrench },
+  { value: "plumber", label: "Plumber", icon: Paintbrush },
+  { value: "driver", label: "Driver", icon: Car },
+  { value: "cook", label: "Cook", icon: ChefHat },
+  { value: "seamstress", label: "Seamstress", icon: Scissors },
+  { value: "cleaner", label: "Cleaner", icon: Lightbulb },
+];
+
+export const URGENCYlEVEL = [
+  { value: "low", label: "Low Priority", color: "text-green-400" },
+  { value: "medium", label: "Medium Priority", color: "text-yellow-400" },
+  { value: "high", label: "High Priority", color: "text-orange-400" },
+  { value: "urgent", label: "Urgent", color: "text-red-400" },
+];
+
+export const TIMEESTIMATE = [
+  { value: "1-2 hours", label: "1-2 hours" },
+  { value: "2-3 hours", label: "2-3 hours" },
+  { value: "3-4 hours", label: "3-4 hours" },
+  { value: "4-6 hours", label: "4-6 hours" },
+  { value: "1 day", label: "1 day" },
+  { value: "2-3 days", label: "2-3 days" },
+  { value: "1 week", label: "1 week" },
+];

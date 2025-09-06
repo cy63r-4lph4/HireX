@@ -13,3 +13,25 @@ export type InfiniteScrollerProps = {
   pauseOnHover?: boolean;
   className?: string;
 };
+
+export type Urgency = "urgent" | "high" | "medium" | "low";
+export type ServiceType = "on-site" | "workshop";
+export type Status = "open" | "assigned" | "completed" | "cancelled";
+
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  location: string;
+  urgency: Urgency;
+  skills: string[];
+  postedBy: string;
+  postedTime: string;
+  timeEstimate: string;
+  rating: number;
+  reviews: number;
+  budget: number;
+  serviceType: ServiceType;
+  status?: Status;
+}
