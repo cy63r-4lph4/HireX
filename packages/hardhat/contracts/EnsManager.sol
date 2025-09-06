@@ -3,18 +3,8 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-interface INameWrapper {
-    function setSubnodeOwner(
-        bytes32 parentNode,
-        string calldata label,
-        address owner,
-        uint32 fuses,
-        uint64 expiry
-    ) external returns (bytes32);
-}
-
-contract ENSManager is Ownable(msg.sender) {
-    INameWrapper public nameWrapper;
+/// @dev Mock ENSManager for hackathon use — does not actually call ENS NameWrapper.
+contract ENSManager is Ownable {
     bytes32 public parentNode;
     string public baseDomain;
 
@@ -23,8 +13,7 @@ contract ENSManager is Ownable(msg.sender) {
 
     event SubnameRegistered(address indexed user, string subname);
 
-    constructor(address _nameWrapper, bytes32 _parentNode, string memory _baseDomain) {
-        nameWrapper = INameWrapper(_nameWrapper);
+    constructor(bytes32 _parentNode, string memory _baseDomain) Ownable(msg.sender) {
         parentNode = _parentNode;
         baseDomain = _baseDomain;
     }
@@ -34,23 +23,18 @@ contract ENSManager is Ownable(msg.sender) {
         return subnameOwners[name] == address(0);
     }
 
-    /** @notice Register a free subname under your parent domain */
-    function registerSubname(string calldata name) external returns (string memory) {
+    /** @notice Register a subname for a specific user (mock, no ENS interaction) */
+    function registerSubname(address _user, string calldata name) external returns (string memory) {
         require(isAvailable(name), "Subname already taken");
 
-        // Map ownership
-        subnameOwners[name] = msg.sender;
-        addressToSubname[msg.sender] = name;
+        // Map ownership to the provided user, not msg.sender
+        subnameOwners[name] = _user;
+        addressToSubname[_user] = name;
 
-        // Set fuses for a "forever" subname
-        uint32 fuses = 65536; // CAN_EXTEND_EXPIRY burned
-        uint64 expiry = type(uint64).max;
-
-        // Call NameWrapper to create the actual ENS subname
-        nameWrapper.setSubnodeOwner(parentNode, name, msg.sender, fuses, expiry);
-
+        // Just return <name>.<baseDomain>, no ENS calls
         string memory fullName = string(abi.encodePacked(name, ".", baseDomain));
-        emit SubnameRegistered(msg.sender, fullName);
+
+        emit SubnameRegistered(_user, fullName);
         return fullName;
     }
 
