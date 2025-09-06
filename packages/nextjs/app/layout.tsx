@@ -1,5 +1,6 @@
 import { UserRoleProvider } from "../hooks/useUserRole";
 import "@rainbow-me/rainbowkit/styles.css";
+import { Toaster } from "sonner";
 import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
@@ -17,7 +18,11 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
       <body>
         <UserRoleProvider>
           <ThemeProvider enableSystem>
-            <ScaffoldEthAppWithProviders> {children}</ScaffoldEthAppWithProviders>
+            <ScaffoldEthAppWithProviders>
+              {" "}
+              {children}
+              <Toaster position="top-right" richColors />
+            </ScaffoldEthAppWithProviders>
           </ThemeProvider>
         </UserRoleProvider>
       </body>

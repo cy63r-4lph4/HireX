@@ -1,0 +1,19 @@
+{
+  "title": "come and do something",
+  "description": "this is the description",
+  "category": "cook",
+  "location": "show",
+  "budgetTokens": 200,
+  "timeEstimate": "1-2 hours",
+  "urgency": "medium",
+  "serviceType": "on-site",
+  "skills": [
+    "showoff"
+  ],
+  "coordinates": {
+    "lat": "5.5545",
+    "lng": "-0.1902"
+  },
+  "hirer": null,
+  "createdAt": 1757136647924
+}

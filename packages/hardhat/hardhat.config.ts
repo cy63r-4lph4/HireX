@@ -14,7 +14,7 @@ import { task } from "hardhat/config";
 import generateTsAbis from "./scripts/generateTsAbis";
 
 // ✅ Private key (Hardhat default account if not set)
-const deployerPrivateKey = "0x14b6311f3fc8af85fd38635eb9d02148bb893f7ff6902f335773cb5c75c42e78";
+const deployerPrivateKey = "";
 
 // ✅ Etherscan key
 const etherscanApiKey = process.env.ETHERSCAN_V2_API_KEY || "";

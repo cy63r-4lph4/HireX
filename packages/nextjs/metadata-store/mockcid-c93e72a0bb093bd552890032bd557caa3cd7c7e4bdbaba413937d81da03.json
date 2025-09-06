@@ -1,0 +1,20 @@
+{
+  "title": "Fix Kichen Outlet",
+  "description": "I need a plumber that can deliver quickly",
+  "category": "plumber",
+  "location": "UPSA Accra",
+  "budgetTokens": 200,
+  "timeEstimate": "3-4 hours",
+  "urgency": "high",
+  "serviceType": "on-site",
+  "skills": [
+    "Plumber",
+    "fast deliverer"
+  ],
+  "coordinates": {
+    "lat": "5.5545",
+    "lng": "-0.1902"
+  },
+  "hirer": null,
+  "createdAt": 1757131618047
+}

@@ -2070,13 +2070,255 @@ const deployedContracts = {
       deployedOnBlock: 30653043,
     },
     ENSManager: {
-      address: "0x7b4C55800f9446D2F2467f570ee323468ef3EFBE",
+      address: "0x7a58069532202c1bB06CD61A36b470AC89E90fF9",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "_parentNode",
+              type: "bytes32",
+            },
+            {
+              internalType: "string",
+              name: "_baseDomain",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "OwnableInvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "OwnableUnauthorizedAccount",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "subname",
+              type: "string",
+            },
+          ],
+          name: "SubnameRegistered",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "addressToSubname",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "baseDomain",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "getFullName",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "isAvailable",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "parentNode",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_user",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "registerSubname",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          name: "subnameOwners",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+      deployedOnBlock: 30676320,
+    },
+    ENSManagerL2: {
+      address: "0xB58F86062870886D1037A82E374B5710A9c2b328",
       abi: [
         {
           inputs: [
             {
               internalType: "address",
-              name: "_nameWrapper",
+              name: "_registry",
               type: "address",
             },
             {
@@ -2225,19 +2467,6 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "nameWrapper",
-          outputs: [
-            {
-              internalType: "contract INameWrapper",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
           name: "owner",
           outputs: [
             {
@@ -2283,6 +2512,19 @@ const deployedContracts = {
         },
         {
           inputs: [],
+          name: "registry",
+          outputs: [
+            {
+              internalType: "contract IL2Registry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
           name: "renounceOwnership",
           outputs: [],
           stateMutability: "nonpayable",
@@ -2322,10 +2564,10 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {},
-      deployedOnBlock: 30653045,
+      deployedOnBlock: 30672532,
     },
     JobFactory: {
-      address: "0x8543B23C5a529dC8150062f1e43E2Fc108e58C0b",
+      address: "0x36d760E4B1AE55eF86Fd5EB928Fc2DC3C10d8D7a",
       abi: [
         {
           inputs: [
@@ -2514,6 +2756,11 @@ const deployedContracts = {
         },
         {
           inputs: [
+            {
+              internalType: "address",
+              name: "hirer",
+              type: "address",
+            },
             {
               internalType: "string",
               name: "title",
@@ -2830,10 +3077,10 @@ const deployedContracts = {
         renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
         transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
       },
-      deployedOnBlock: 30653051,
+      deployedOnBlock: 30682457,
     },
     Profile: {
-      address: "0x168F88d61510A971Efa87d4AA3fA718Be1Ac9F90",
+      address: "0x565A99925AEd5b53F363EBB5BfE268bBD8d414fe",
       abi: [
         {
           inputs: [
@@ -3237,7 +3484,7 @@ const deployedContracts = {
         renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
         transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
       },
-      deployedOnBlock: 30653048,
+      deployedOnBlock: 30676321,
     },
   },
 } as const;

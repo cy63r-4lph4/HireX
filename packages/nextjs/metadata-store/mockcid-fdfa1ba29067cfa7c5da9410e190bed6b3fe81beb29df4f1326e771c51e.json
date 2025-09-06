@@ -1,0 +1,19 @@
+{
+  "title": "something to do",
+  "description": "here is a job for you",
+  "category": "driver",
+  "location": "Legon",
+  "budgetTokens": 120,
+  "timeEstimate": "2-3 hours",
+  "urgency": "medium",
+  "serviceType": "on-site",
+  "skills": [
+    "driving"
+  ],
+  "coordinates": {
+    "lat": "5.5545",
+    "lng": "-0.1902"
+  },
+  "hirer": "0x065505c4fD54b71f03e6b8A7ef77acB443A80845",
+  "createdAt": 1757137113130
+}
