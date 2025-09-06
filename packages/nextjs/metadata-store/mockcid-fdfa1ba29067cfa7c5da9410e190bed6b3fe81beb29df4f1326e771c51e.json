@@ -7,9 +7,7 @@
   "timeEstimate": "2-3 hours",
   "urgency": "medium",
   "serviceType": "on-site",
-  "skills": [
-    "driving"
-  ],
+  "skills": ["driving"],
   "coordinates": {
     "lat": "5.5545",
     "lng": "-0.1902"

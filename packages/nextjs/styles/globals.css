@@ -125,24 +125,30 @@
 
 body {
   @apply bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white min-h-screen;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-attachment: fixed;
 }
 
 .font-orbitron {
-  font-family: 'Orbitron', monospace;
+  font-family: "Orbitron", monospace;
 }
 
 .crypto-glow {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(147, 51, 234, 0.3);
+  box-shadow:
+    0 0 20px rgba(59, 130, 246, 0.5),
+    0 0 40px rgba(147, 51, 234, 0.3);
 }
 
 .neon-border {
   border: 2px solid transparent;
   background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
-  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
   mask-composite: exclude;
 }
 
@@ -165,8 +171,13 @@ body {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .pulse-glow {
@@ -174,8 +185,14 @@ body {
 }
 
 @keyframes pulseGlow {
-  from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-  to { box-shadow: 0 0 30px rgba(147, 51, 234, 0.8), 0 0 40px rgba(59, 130, 246, 0.6); }
+  from {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+  to {
+    box-shadow:
+      0 0 30px rgba(147, 51, 234, 0.8),
+      0 0 40px rgba(59, 130, 246, 0.6);
+  }
 }
 
 .gradient-text {
@@ -186,7 +203,7 @@ body {
 }
 
 .cyber-grid {
-  background-image: 
+  background-image:
     linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -219,9 +236,9 @@ body {
 }
 
 @keyframes scroll {
-	to {
-		transform: translate(calc(-50% - 0.75rem));
-	}
+  to {
+    transform: translate(calc(-50% - 0.75rem));
+  }
 }
 
 .animate-scroll {
@@ -359,4 +376,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
