@@ -7,9 +7,7 @@
   "timeEstimate": "1-2 hours",
   "urgency": "medium",
   "serviceType": "on-site",
-  "skills": [
-    "showoff"
-  ],
+  "skills": ["showoff"],
   "coordinates": {
     "lat": "5.5545",
     "lng": "-0.1902"

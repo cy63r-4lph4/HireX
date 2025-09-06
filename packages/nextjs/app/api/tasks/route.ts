@@ -204,30 +204,28 @@ export async function GET() {
     const jobs = await contract.getAllJobs();
 
     // === Transform & filter
-    const parsedJobs: TaskPosting[] = jobs
-      .map((job: any) => {
-        const metadata = readMetadataByCid(job.metadataURI) || {};
-        return {
-          id: Number(job.id),
-          title: metadata.title || job.title || "Untitled",
-          description: metadata.description || "",
-          category: metadata.category || "general",
-          location: metadata.location || "unknown",
-          coordinates: metadata.coordinates,
-          budget: Number(job.budget),
-          timeEstimate: metadata.timeEstimate || "N/A",
-          urgency: metadata.urgency || "medium",
-          serviceType: metadata.serviceType || "on-site",
-          rating: metadata.rating || 0,
-          reviews: metadata.reviews || 0,
-          postedBy: job.client,
-          postedTime: metadata.postedTime || new Date().toISOString(),
-          skills: metadata.skills || [],
-          status:
-            job.status === 0 ? "open" : job.status === 1 ? "assigned" : job.status === 2 ? "completed" : "cancelled",
-        } as TaskPosting;
-      })
-      .filter((job: any) => job.status === "open");
+    const parsedJobs: TaskPosting[] = jobs.map((job: any) => {
+      const metadata = readMetadataByCid(job.metadataURI) || {};
+      return {
+        id: Number(job.id),
+        title: metadata.title || job.title || "Untitled",
+        description: metadata.description || "",
+        category: metadata.category || "general",
+        location: metadata.location || "unknown",
+        coordinates: metadata.coordinates,
+        budget: Number(job.budget),
+        timeEstimate: metadata.timeEstimate || "N/A",
+        urgency: metadata.urgency || "medium",
+        serviceType: metadata.serviceType || "on-site",
+        rating: metadata.rating || 0,
+        reviews: metadata.reviews || 0,
+        postedBy: job.client,
+        postedTime: metadata.postedTime || new Date().toISOString(),
+        skills: metadata.skills || [],
+        status:
+          job.status === 0 ? "open" : job.status === 1 ? "assigned" : job.status === 2 ? "completed" : "cancelled",
+      } as TaskPosting;
+    });
 
     return NextResponse.json(parsedJobs);
   } catch (err: any) {
