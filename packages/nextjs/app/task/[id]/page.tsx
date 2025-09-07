@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft, Building, Clock, DollarSign, Home, MapPin } from "lucide-react";
 // import { toast } from "sonner";
@@ -11,16 +11,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "~~/components/ui/card"
 import { useTask } from "~~/hooks/useTask";
 import { TaskPosting } from "~~/interface";
 
-interface TaskDetailsPageProps {
-  params: { id: string };
-}
-
-const TaskDetailsPage: React.FC<TaskDetailsPageProps> = ({ params }) => {
-  const { id } = params;
+const TaskDetailsPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
-  const { task, loading } = useTask(id); // ⬅️ hook here
-
+  const { task, loading } = useTask(id);
   const getUrgencyColor = (urgency?: TaskPosting["urgency"]) => {
     switch (urgency) {
       case "urgent":
